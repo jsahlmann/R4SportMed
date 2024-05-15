@@ -44,7 +44,8 @@ l3
 l3 <- l3[-c(3,4)]
 l3
 
-# Einfache For-Schleife, Bedingung in runden Klammern, Anweisungen in geschweiften Klammern.
+# Einfache For-Schleife, Bedingung in runden Klammern, 
+# Anweisungen in geschweiften Klammern.
 l3 <- list(1, "A", "B", TRUE, 2, 10)
 for (l in l3) {
     print(l)
@@ -65,7 +66,8 @@ print(c(1, 2) %in% l3)
 print(list(3, 4))
 
 # Verschachtelte Listen.
-l4 <- list(c(3, 1), c(4, 2), list("A", 3, "C"))
+l4 <- list(c(3, 1), c(4, 2), 
+           list("A", 3, "C"))
 print(l4)
 
 l4

@@ -1,8 +1,10 @@
-library(tidyverse)
+# Siehe CheatSheet: befehlsreferenzen/Posit (Hg) 2021-08 - Data visualization with ggplot2 335.pdf
+suppressPackageStartupMessages(library(tidyverse))
 library(ggplot2)
 
 # Einlesen der Rohdaten aus dem Programm heraus.
-CSV_text_string = "VSSTRESN, VSDY, vstest2, id
+CSV_text_string <- 
+"VSSTRESN, VSDY, vstest2, id
 68, -16, 'Diastolic', 2
 68, -2, 'Diastolic', 2
 68, 1, 'Diastolic', 2
@@ -38,7 +40,7 @@ CSV_text_string = "VSSTRESN, VSDY, vstest2, id
 130, 114, 'Systolic', 1
 "
 
-df = read.csv(text = CSV_text_string, header = TRUE, quote = "\'")
+df <- read.csv(text = CSV_text_string, header = TRUE, quote = "\'")
 df$vstest2 <- trimws(df$vstest2)
 head(df)
 table(df$vstest2)
@@ -52,7 +54,6 @@ plt
 plt <- ggplot(data = df, aes(x = VSDY, y = VSSTRESN)) +
   geom_line() +
   facet_wrap(vstest2~., scales = "free", dir = "v")
-
 plt
 
 # Zur angepassten Sortierung werden die Strings der Labels in Faktoren umgewandelt.
@@ -62,7 +63,6 @@ head(df2)
 plt <- ggplot(data = df2, aes(x = VSDY, y = VSSTRESN)) +
   geom_line() +
   facet_wrap(vstest2~., scales = "free", dir = "v")
-
 plt
 
 # Punkte ergänzt
@@ -76,14 +76,14 @@ plt
 # https://www.datanovia.com/en/blog/ggplot-point-shapes-best-tips/
 plt <- ggplot(data = df2, aes(x = VSDY, y = VSSTRESN)) +
   geom_line() +
-  geom_point(shape = 16, size = 2, color = "white") +
+  geom_point(shape = 16, size = 2, color = "grey") +
   facet_wrap(vstest2~., scales = "free", dir = "v") 
 plt
 
 # Linien farbig.
 plt <- ggplot(data = df2, aes(x = VSDY, y = VSSTRESN, color = vstest2)) +
   geom_line() +
-  geom_point(shape = 16, size = 2, color = "white") +
+  geom_point(shape = 16, size = 2, color = "grey") +
   facet_wrap(vstest2~., scales = "free", dir = "v") 
 plt
 
@@ -91,7 +91,7 @@ plt
 # http://www.sthda.com/english/wiki/ggplot2-colors-how-to-change-colors-automatically-and-manually
 plt <- ggplot(data = df2, aes(x = VSDY, y = VSSTRESN, color = vstest2)) +
   geom_line() +
-  geom_point(shape = 16, size = 2, color = "white") +
+  geom_point(shape = 16, size = 2, color = "grey") +
   facet_wrap(vstest2~., scales = "free", dir = "v") +
   scale_color_manual(breaks = c("Systolic", "Diastolic", "Pulse"),
                      values=c("blue", "red", "green"))
@@ -105,7 +105,7 @@ plt
 
 plt <- ggplot(data = df2, aes(x = VSDY, y = VSSTRESN, color = vstest2)) +
   geom_line() +
-  geom_point(shape = 16, size = 2, color = "white") +
+  geom_point(shape = 16, size = 2, color = "grey") +
   geom_vline(xintercept = 0, color = "grey") +
   facet_wrap(vstest2~., scales = "free", dir = "v") +
   labs(color = "Vitals") +
@@ -115,7 +115,9 @@ plt <- ggplot(data = df2, aes(x = VSDY, y = VSSTRESN, color = vstest2)) +
   scale_x_continuous(breaks = c(0, 25, 50, 100)) +
   xlab("Study Days") +
   ylab("") + 
-  ggtitle("Vital Statistics for Patient Id = x")
+  ggtitle("Vital signs for Patient Id = x")
 plt
 
+# Erster Einblick in das Paket **ggplot2**
+# Anderer Kurs mit mehr Details bei Gelegenheit ...
 

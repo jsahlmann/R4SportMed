@@ -15,7 +15,9 @@ suppressPackageStartupMessages(library(broom))
 
 ## ------------------------------------------------------------------------------------------------
 
-head(Prestige) %>% flextable() %>% autofit()
+head(Prestige) %>% 
+  flextable() %>% 
+  autofit()
 
 
 
@@ -34,7 +36,8 @@ lm1
 
 ## ------------------------------------------------------------------------------------------------
 
-ft <- tidy(lm1) %>% flextable()
+ft <- tidy(lm1) %>% 
+  flextable()
 ft
 
 

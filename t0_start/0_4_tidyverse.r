@@ -1,6 +1,8 @@
+# Siehe CheatSheet: befehlsreferenzen/RStudio (Hg) - Data Wrangling with dplyr.pdf
 library(tidyverse)
 
-ae = read.csv(file = "data/ae.csv", sep = ",", header = TRUE, quote = "\"'")
+ae = read.csv(file = "data/ae.csv", 
+              sep = ",", header = TRUE, quote = "\"'")
 
 head(ae)
 
@@ -11,13 +13,15 @@ head(tibble::as_tibble(ae))
 dplyr::glimpse(ae)
 
 # select() wählt Variablen aus
-# %>% wird als Piping-Operator bezeichnet, das Ergebnis links wird als Eingabe rechts an erster Stelle eingegeben.
-# select() in dieser Form entspricht dem KEEP.
+# %>% wird als Piping-Operator bezeichnet, das Ergebnis links 
+# wird als Eingabe rechts an erster Stelle eingegeben.
+# select() in dieser Form entspricht dem KEEP in SAS.
 ae1 <- ae %>% select(DOMAIN, USUBJID, AEDECOD, AEBODSYS)
 head(ae1)
 
-# Die Domain soll ebenfalls entfernt werden. Mehrere Variablen werden als Vektor übergeben -c(DOMAIN, AEDECOD)
-# select mit Minus-Zeichen entspricht dem DROP.
+# Die Domain soll ebenfalls entfernt werden. Mehrere Variablen 
+# werden als Vektor übergeben -c(DOMAIN, AEDECOD)
+# select mit Minus-Zeichen entspricht dem DROP in SAS.
 ae2 <- ae1 %>% select(-DOMAIN)
 head(ae2)
 
@@ -38,28 +42,58 @@ head(ae1)
 ae2 <- ae1 %>% slice(2:4)
 ae2
 
-# Die erste 4 Studienteilnehmer im Datensatz suchen
-head(unique(ae$USUBJID), 4)
+ae1 %>% 
+  group_by(AEDECOD) %>%
+  count()
 
-# Diesen willkürlich zu Demo-Zwecken eine Therapie zuweisen und einen weiteren Patienten ergänzen, der im Datensatz 
-# ae nicht vorkommt.
-# rep() ist eine Funktion zur Wiederholung eines Vektors.
-# seq() gehört zu dieser Funktion dazu.
-USUBJID = c('01-701-1015', '01-701-1023', '01-701-1028', '01-701-1034', '01-702-1001')
-TRTP = c(rep(c("TRT_A", "TRT_B"), 2), "TRT_C")
+# Häufigkeitstabellen
+ae1_pct <- ae1 %>% 
+  group_by(AEDECOD) %>%
+  count() %>%
+  ungroup() %>%
+  mutate(pct = round(n / sum(n) * 100, 2),
+         pct2 = n/sum(n) * 100)
+ae1_pct
+# Cave: Zu frühes Runden ...
+sum(ae1_pct$pct)
+sum(ae1_pct$pct2)
 
-Applied_TRT <- data.frame(USUBJID, TRTP)
-Applied_TRT
 
 
-# Alle Patienten, die ein Treatment haben.
-inner_join(ae, Applied_TRT, by = c("USUBJID")) %>% select(USUBJID, AETERM, TRTP) # %>% select(USUBJID) %>% unique() %>% count()
 
-# Alle Patienten, die kein Treatment haben.
-# Strings haben einen NA Wert.
-left_join(ae, Applied_TRT, by = c("USUBJID")) %>% select(USUBJID, AETERM, TRTP) %>% filter(is.na(TRTP)) %>% select(USUBJID) %>% unique() %>% count()
+# Einen Vektor erzeugen, der einen Studienteilnehmer enthält, der nicht
+# in der AE-Tabelle ist und zwei Studienteilnehmer herausnehmen, die in der 
+# AE-Tabelle sind.
+v1 <- c(head(unique(ae$USUBJID), length(unique(ae$USUBJID)) - 2),
+        "01-700-1000")
+set.seed(123)
+v2 <- sample(c("TRT_A", "TRT_B", "TRT_C"), length(v1), replace = TRUE)
 
-# Patienten mit Treatment und ohne AE.
-right_join(ae, Applied_TRT, by = c("USUBJID")) %>% select(USUBJID, AETERM, TRTP) %>% filter(is.na(AETERM))
+df_trt <- data.frame("USUBJID" = v1, "TRTP" = v2) %>%
+  arrange(USUBJID)
+head(df_trt)
+
+# Alle AEs, die ein Treatment haben und alle Treamtents,
+# die kein AE haben.
+df_all <- full_join(ae, df_trt, by = c("USUBJID"), ) %>% 
+  select(USUBJID, AETERM, TRTP) %>%
+  filter(is.na(AETERM) | is.na(TRTP))
+df_all
+
+# Zahl der Patienten mit AE und ohne Treatment
+df_all %>%
+  filter(is.na(TRTP)) %>%
+  select(USUBJID) %>%
+  unique() %>%
+  count() %>%
+  pull()
+
+# Zahl der Patienten mit Treatment und ohne AE
+df_all %>%
+  filter(is.na(AETERM)) %>%
+  select(USUBJID) %>%
+  unique() %>%
+  count() %>%
+  pull()
 
 

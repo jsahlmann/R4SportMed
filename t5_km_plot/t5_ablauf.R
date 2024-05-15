@@ -1,3 +1,4 @@
+# Siehe CheatSheet: befehlsreferenzen/survminer_cheatsheet.pdf
 ## -------------------------------------------------------------------------------------------------------------------
 suppressPackageStartupMessages(library(tidyverse))
 suppressPackageStartupMessages(library(ggplot2))
@@ -74,7 +75,7 @@ ggsurvplot(
   sf,
   data = df,
   size = 1,                 # change line size
-  conf.int = TRUE,
+  conf.int = FALSE,
   palette =
     c("green", "#E7B800", "#2E9FDF"),# custom color palettes
   pval = TRUE,              # Add p-value

@@ -3,27 +3,52 @@ library(tidyverse)
 ae = read.csv(file = "data/ae.csv", sep = ",", header = TRUE, quote = "\"'")
 
 # Wir wollen sehen, wie viele unterschiedliche Patienten AEs hatten
-ae %>% group_by(USUBJID) %>% count() %>% ungroup()
-ae %>% group_by(USUBJID) %>% count() %>% ungroup() %>% nrow()
-ae %>% nrow()
+ae %>% 
+  group_by(USUBJID) %>% 
+  count() %>% 
+  ungroup() %>%
+  filter(n > 0) # Redundant, da AE-Tabelle ...
+ae %>% 
+  group_by(USUBJID) %>% 
+  count() %>% 
+  ungroup() %>% 
+  nrow()
+ae %>% 
+  nrow()
 
 # Aufsteigend nach Zahl der AEs sortieren
-# Sortieren nach mehreren Variablen, im Befehl **arrange()** in gewünschter Reihenfolge auflisten.
-ae %>% arrange(AESTDY) %>% head() %>% select(USUBJID, AETERM, AESTDY)
-#ae %>% filter(USUBJID == "01-705-1393")
+# Sortieren nach mehreren Variablen, 
+# im Befehl **arrange()** in gewünschter Reihenfolge auflisten.
+ae %>% 
+  arrange(AESTDY) %>% 
+  head() %>% 
+  select(USUBJID, AETERM, AESTDY)
+
+# glimpse() kann übersichtlicher sein
+# ae %>% filter(USUBJID == "01-705-1393") %>% glimpse()
 
 # Gruppieren und sortieren
-ae %>% group_by(USUBJID) %>% count() %>% ungroup() %>% arrange(n)
+ae %>% 
+  group_by(USUBJID) %>% 
+  count() %>% 
+  ungroup() %>% 
+  arrange(n)
 
 # Absteigend nach Zahl der AEs sortieren
-ae %>% group_by(USUBJID) %>% count() %>% ungroup() %>% arrange(desc(n)) %>% head(10)
+ae %>% 
+  group_by(USUBJID) %>% 
+  count() %>% 
+  ungroup() %>% 
+  arrange(desc(n)) %>% 
+  head(10)
 
 # Neuen Datensatz SDTM DM laden
 dm = read.csv(file = "data/dm.csv", sep = ",", header = TRUE, quote = "\"'")
 head(dm)
 glimpse(dm)
 
-# Nacharbeiten des Import
+# Nacharbeiten des Import in Abhängigkeit von dem Paket, mit dem
+# eingelesen wird. **read_csv** erkennt gängige Datenformate eigenständig.
 dm = read_csv(file = "data/dm.csv")
 
 
@@ -31,20 +56,24 @@ head(dm)
 
 table(dm$RFICDTC)
 
+# Einen Datentyp händisch zuweisen
 dm = read_csv(file = "data/dm.csv", 
               col_types = list(
               RFICDTC = col_date(format = "")
               ))
 head(dm)
+# Kein Eintrag, daher hat die Funktion den Typ auch nur raten können.
 table(dm$RFICDTC)
 
 # Summary-Funktionen
 # Mögliche "Fehlfunktionen" bei fehlenden Werten
+# AGE hat keine fehlenden Werte.
 dm %>% summarise(AGE_mean = mean(AGE))
 dm %>% filter(is.na(AGE)) %>% count()
 dm %>% summarise(AGE_mean = mean(AGE, na.rm = TRUE))
 
 # Mehrere Summary-Funktionen möglich
+# Aber AESTDY hat fehlende Werte.
 ae %>% summarise(AESTDY_n = n(),
                  AESTDY_mean = mean(AESTDY),
                  AESTDY_sd = sd(AESTDY))
@@ -52,6 +81,10 @@ ae %>% summarise(AESTDY_n = n(),
 ae %>% summarise(AESTDY_n = n(),
                  AESTDY_mean = mean(AESTDY, na.rm = TRUE),
                  AESTDY_sd = sd(AESTDY, na.rm = TRUE))
+
+ae %>% summarise(AESTDY_n = n(),
+                 AESTDY_mean = round(mean(AESTDY, na.rm = TRUE), 2),
+                 AESTDY_sd = round(sd(AESTDY, na.rm = TRUE), 3))
 
 # Mehrere Summary-Funktionen möglich
 # Zusätzliches Gruppieren nach Treatment
@@ -61,14 +94,19 @@ dm %>% group_by(ACTARM) %>%
             AGE_sd = sd(AGE, na.rm = TRUE))
 
 # Welcher Patient hat als erstes welche Therapie bekommen?
-dm1 <- dm %>% select(USUBJID, ACTARM, RFXSTDTC)
+dm1 <- dm %>% 
+  select(USUBJID, ACTARM, RFXSTDTC)
 head(dm1)
 
 # Sortieren nach ACTARM und RFXSTDTC
-dm1 %>% arrange(ACTARM, RFXSTDTC) %>% head()
+dm1 %>% 
+  arrange(ACTARM, RFXSTDTC) %>% 
+  head()
 
 # Nutzen der first()- und last()-Funktionen
-dm1 %>% arrange(ACTARM, RFXSTDTC) %>% group_by(ACTARM) %>% 
+dm1 %>% 
+  arrange(ACTARM, RFXSTDTC) %>% 
+  group_by(ACTARM) %>% 
   summarise(trt_first = first(USUBJID),
             trt_last = last(USUBJID)) %>% 
   ungroup()
@@ -77,25 +115,33 @@ head(dm1)
 
 # Alternativer Ansatz unter Beibehaltung aller Daten und 
 # anschließendem Filtern
-dm2 <- dm1 %>% arrange(ACTARM, RFXSTDTC) %>% 
-         group_by(ACTARM) %>% 
-         mutate(id = row_number()) %>%
-         mutate(id_min = min(id)) %>%
-         mutate(id_max = max(id)) %>%
-         ungroup()
+dm2 <- dm1 %>% 
+  arrange(ACTARM, RFXSTDTC) %>% 
+  group_by(ACTARM) %>% 
+  mutate(id = row_number()) %>%
+  mutate(id_min = min(id)) %>%
+  mutate(id_max = max(id)) %>%
+  ungroup()
 head(dm2)
 
-# Filtern kann auch nur für eine Bedingung erfolgen, um first und last getrennt zu erhalten.
-dm2 %>% filter(id == id_min | id == id_max)
+# Filtern kann auch nur für eine Bedingung erfolgen, 
+# um first und last getrennt zu erhalten.
+dm2 %>% 
+  filter(id == id_min | id == id_max)
 
-dm3 <- dm %>% select(USUBJID, ACTARM, RFXSTDTC, RFXENDTC)
+dm3 <- dm %>% 
+  select(USUBJID, ACTARM, RFXSTDTC, RFXENDTC)
 head(dm3)
 
 # Wir erhalten ein Datendifferenz-Objekt.
-dm3 %>% mutate(dd = RFXENDTC - RFXSTDTC) %>% head()
+dm3 %>% 
+  mutate(dd = RFXENDTC - RFXSTDTC) %>% 
+  head()
 
 # Jetzt gibt es einen Integerwert.
-dm3 %>% mutate(dd = as.integer(RFXENDTC - RFXSTDTC)) %>% head()
+dm3 %>% 
+  mutate(dd = as.integer(RFXENDTC - RFXSTDTC)) %>% 
+  head()
 
 # Alternative Zuweisung über $ möglich
 # Geschmackssache ...

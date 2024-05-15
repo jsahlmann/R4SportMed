@@ -34,7 +34,8 @@ head(df)
 
 ## ------------------------------------------------------------------------------------------------
 
-df_long <- df %>% pivot_longer(cols = -c(id, treatment, gender, age), names_to = "Visit", values_to = "RR")
+df_long <- df %>% 
+  pivot_longer(cols = -c(id, treatment, gender, age), names_to = "Visit", values_to = "RR")
 head(df_long)
 
 
@@ -75,7 +76,8 @@ plt
 
 ## ------------------------------------------------------------------------------------------------
 
-plt <- plt + scale_color_discrete(name = "Treatment", labels = c("Reference", "Test")) +
+plt <- plt + 
+  scale_color_discrete(name = "Treatment", labels = c("Reference", "Test")) +
   scale_x_continuous(breaks = c(1, 2, 3), labels= c("V1", "V2", "V3"))
 plt
 
@@ -83,14 +85,16 @@ plt
 
 ## ------------------------------------------------------------------------------------------------
 
-plt <- plt + geom_pointrange(aes(ymin = m - s, ymax = m + s))
+plt <- plt + 
+  geom_pointrange(aes(ymin = m - s, ymax = m + s))
 plt
 
 
 
 ## ------------------------------------------------------------------------------------------------
 
-plt <- plt + geom_segment(aes(x = visitn - 0.03, xend = visitn + 0.03, y = m + s, yend = m + s)) +
+plt <- plt + 
+  geom_segment(aes(x = visitn - 0.03, xend = visitn + 0.03, y = m + s, yend = m + s)) +
   geom_segment(aes(x = visitn - 0.03, xend = visitn + 0.03, y = m - s, yend = m - s))
 plt
 
