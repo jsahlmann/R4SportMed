@@ -4,7 +4,7 @@ library(ggplot2)
 # From the developer of ggplot
 # https://ggplot2-book.org/
 
-# From the same author 
+# From the same author
 # https://r4ds.had.co.nz/index.html
 
 # Beispielkapitel String-Handling
@@ -32,12 +32,12 @@ library(ggplot2)
 # Basic scatterplot
 head(iris)
 
-ggplot(iris, aes(x = Sepal.Length, y = Sepal.Width)) + 
+ggplot(iris, aes(x = Sepal.Length, y = Sepal.Width)) +
   geom_point()
 
 # Mit Regressionsgerade
-ggplot(iris, aes(x = Sepal.Length, y = Sepal.Width)) + 
-  geom_point() + 
+ggplot(iris, aes(x = Sepal.Length, y = Sepal.Width)) +
+  geom_point() +
   geom_smooth(method = "lm")
 
 # Berechnung der Regressionsgeraden
@@ -45,9 +45,9 @@ lmf <- lm(Sepal.Width ~ Sepal.Length, data = iris)
 lmf
 
 # Hartkodierte Parameter
-ggplot(iris, aes(x = Sepal.Length, y = Sepal.Width)) + 
-  geom_point() + 
-  geom_smooth(method = "lm") + 
+ggplot(iris, aes(x = Sepal.Length, y = Sepal.Width)) +
+  geom_point() +
+  geom_smooth(method = "lm") +
   geom_abline(aes(intercept=3.41895, slope=-0.06188), color = "grey") +
   xlim(c(0, 8)) +
   ylim(c(0, 5))
@@ -60,20 +60,20 @@ b0 <- lmf$coefficients[1]
 b1 <- lmf$coefficients[2]
 
 # Parameter aus Variablen außerhalb des Datensatzes für den Plot
-ggplot(iris, aes(x = Sepal.Length, y = Sepal.Width)) + 
-  geom_point() + 
-  geom_smooth(method = "lm") + 
+ggplot(iris, aes(x = Sepal.Length, y = Sepal.Width)) +
+  geom_point() +
+  geom_smooth(method = "lm") +
   geom_abline(aes(intercept = b0, slope = b1), color = "grey") +
   xlim(c(0, 8)) +
   ylim(c(0, 5))
 
 # Plot gruppieren
-ggplot(iris, aes(x = Sepal.Length, y = Sepal.Width, col = Species)) + 
+ggplot(iris, aes(x = Sepal.Length, y = Sepal.Width, col = Species)) +
   geom_point()
 
 # Regressionsgerade per Gruppe
-ggplot(iris, aes(x = Sepal.Length, y = Sepal.Width, col = Species)) + 
-  geom_point() + 
+ggplot(iris, aes(x = Sepal.Length, y = Sepal.Width, col = Species)) +
+  geom_point() +
   geom_smooth(method = "lm")
 
 # ------------------------------------------------------------------------------
@@ -82,14 +82,14 @@ ggplot(iris, aes(x = Sepal.Length, y = Sepal.Width, col = Species)) +
 data("midwest", package = "ggplot2")
 head(midwest)
 
-gg <- ggplot(midwest, aes(x = area, y = poptotal)) + 
-  geom_point(aes(col = state, size = popdensity)) + 
-  geom_smooth(method = "loess", se = F) + 
-  xlim(c(0, 0.1)) + 
-  ylim(c(0, 500000)) + 
-  labs(subtitle = "Area Vs Population", 
-       y = "Population", 
-       x = "Area", 
+gg <- ggplot(midwest, aes(x = area, y = poptotal)) +
+  geom_point(aes(col = state, size = popdensity)) +
+  geom_smooth(method = "loess", se = F) +
+  xlim(c(0, 0.1)) +
+  ylim(c(0, 500000)) +
+  labs(subtitle = "Area Vs Population",
+       y = "Population",
+       x = "Area",
        title = "Scatterplot", size = "Density", col = "State",
        caption = "Source: midwest")
 
@@ -102,24 +102,22 @@ head(mpg)
 # disp = Hubraum
 theme_set(theme_bw())
 
-
-gg <- ggplot(mpg, aes(cty, hwy))
-
 # Scatterplot mit überlappenden Punkten
-gg + geom_point() + 
+gg <- ggplot(mpg, aes(cty, hwy))
+gg + geom_point() +
   geom_smooth(method="lm", se=F) +
-  labs(subtitle="mpg: city vs highway mileage", 
-       y="hwy", 
-       x="cty", 
-       title="Scatterplot with overlapping points", 
+  labs(subtitle="mpg: city vs highway mileage",
+       y="hwy",
+       x="cty",
+       title="Scatterplot with overlapping points",
        caption="Source: midwest")
 
 # Scatterplot mit gestreuten Punkten
 gg <- ggplot(mpg, aes(cty, hwy))
-gg + geom_jitter(width = .5, size=1) +
-  labs(subtitle = "mpg: city vs highway mileage", 
-       y = "hwy", 
-       x = "cty", 
+gg + geom_jitter(width = 0.25, height = 0.25, size=2) +
+  labs(subtitle = "mpg: city vs highway mileage",
+       y = "hwy",
+       x = "cty",
        title = "Scatterplot with jittered Points")
 
 # ------------------------------------------------------------------------------
@@ -143,20 +141,20 @@ gg <- ggplot(mpg, aes(displ)) + scale_fill_brewer(palette = "Spectral")
 gg + geom_histogram()
 
 # Histogramm mit vorgegebener Breite der Behälter
-gg + geom_histogram(aes(fill = class), 
-                   binwidth  =  .1, 
-                   col = "black", 
-                   size = .1) + 
-  labs(title = "Histogramm mit vorgegebener Breite", 
-       subtitle = "Hubraum vs. Klasse")  
+gg + geom_histogram(aes(fill = class),
+                   binwidth  =  .1,
+                   col = "black",
+                   size = .1) +
+  labs(title = "Histogramm mit vorgegebener Breite",
+       subtitle = "Hubraum vs. Klasse")
 
 # Histogramm mit vorgegebener Zahl der Behälter
-gg + geom_histogram(aes(fill = class), 
-                   bins = 5, 
-                   col = "black", 
-                   size = .1) + 
-  labs(title = "Histogramm mit vorgegebener Zahl der Behälter", 
-       subtitle = "Hubraum vs. Klasse") 
+gg + geom_histogram(aes(fill = class),
+                   bins = 5,
+                   col = "black",
+                   size = .1) +
+  labs(title = "Histogramm mit vorgegebener Zahl der Behälter",
+       subtitle = "Hubraum vs. Klasse")
 
 
 
@@ -166,15 +164,15 @@ gg + geom_histogram(aes(fill = class),
 # Qualitative:
 # Accent, Dark2, Paired, Pastel1, Pastel2, Set1, Set2, Set3
 # Sequential:
-# Blues, BuGn, BuPu, GnBu, Greens, Greys, Oranges, OrRd, PuBu, PuBuGn, PuRd, 
+# Blues, BuGn, BuPu, GnBu, Greens, Greys, Oranges, OrRd, PuBu, PuBuGn, PuRd,
 # Purples, RdPu, Reds, YlGn, YlGnBu, YlOrBr, YlOrRd
-gg + scale_fill_brewer(palette = "Oranges") + 
-  geom_histogram(aes(fill = class), 
-                    bins = 5, 
-                    col = "black", 
-                    size = .1) +  
-  labs(title = "Histogramm mit vorgegebener Zahl der Behälter", 
-       subtitle = "Hubraum vs. Klasse", fill = "Class") 
+gg + scale_fill_brewer(palette = "Oranges") +
+  geom_histogram(aes(fill = class),
+                    bins = 5,
+                    col = "black",
+                    size = .1) +
+  labs(title = "Histogramm mit vorgegebener Zahl der Behälter",
+       subtitle = "Hubraum vs. Klasse", fill = "Class")
 
 
 # Verschiedene Kombinationen aller Parameter als Themen
@@ -182,13 +180,13 @@ gg + scale_fill_brewer(palette = "Oranges") +
 theme_set(theme_void())
 theme_get()
 
-theme_test <- gg + scale_fill_brewer(palette = "Oranges") + 
-  geom_histogram(aes(fill = class), 
-                 bins = 5, 
-                 col = "black", 
-                 size = .1) +  
-  labs(title = "Histogramm mit vorgegebener Zahl der Behälter", 
-       subtitle = "Hubraum vs. Klasse", fill = "Class") 
+theme_test <- gg + scale_fill_brewer(palette = "Oranges") +
+  geom_histogram(aes(fill = class),
+                 bins = 5,
+                 col = "black",
+                 size = .1) +
+  labs(title = "Histogramm mit vorgegebener Zahl der Behälter",
+       subtitle = "Hubraum vs. Klasse", fill = "Class")
 
 theme_test
 
@@ -222,18 +220,23 @@ theme_set(theme_classic())
 # |_|   |_|\___|  \____|_| |_|\__,_|_|   \__| #
 #                                             #
 ##############################################"
+#
+# OBWOHL PIECHARTS TECHNISCH MÖGLICH SIND, SOLLTEN SIE NICHT BENUTZT WERDEN.
+# https://scc.ms.unimelb.edu.au/resources/data-visualisation-and-exploration/no_pie-charts
+# https://evolytics.com/blog/8-dont-use-pie-charts/
+# https://inforiver.com/insights/11-pie-chart-alternatives-and-when-to-use-them/
 # ------------------------------------------------------------------------------
 # Berechnung der Häufigkeiten als Grundlage für die Grafik
 df <- as.data.frame(table(mpg$class))
 colnames(df) <- c("class", "freq")
-pie <- ggplot(df, aes(x = "", y=freq, fill = factor(class))) + 
+pie <- ggplot(df, aes(x = "", y=freq, fill = factor(class))) +
   geom_bar(width = 1, stat = "identity") +
-  theme(axis.line = element_blank(), 
-        plot.title = element_text(hjust=0.5)) + 
-  labs(fill = "Class", 
-       x = NULL, 
-       y = NULL, 
-       title = "Pie Chart of class", 
+  theme(axis.line = element_blank(),
+        plot.title = element_text(hjust=0.5)) +
+  labs(fill = "Class",
+       x = NULL,
+       y = NULL,
+       title = "Pie Chart of class",
        caption = "Source: mpg")
 pie
 # Ausgabe mit Polarkoordinaten macht den Kuchen rund
@@ -244,16 +247,16 @@ pie + coord_polar(theta = "y", start = 0, direction = 1) +
   scale_fill_brewer(palette = "Oranges")
 
 # Manuelle Farbpalette durch vordefinierte Farbwerte
-cols <- c("2seater" = "red", "compact" = "blue", "midsize" = "darkgreen", 
-          "minivan" = "orange", "pickup" =  "purple", "subcompact" = "yellow", 
+cols <- c("2seater" = "red", "compact" = "blue", "midsize" = "darkgreen",
+          "minivan" = "orange", "pickup" =  "purple", "subcompact" = "yellow",
           "suv" = "lightgreen")
 pie + coord_polar(theta = "y", start = 0, direction = 1) +
   scale_colour_manual(values = cols, aesthetics = c("fill"))
 
 # Manuelle Farbpalette durch RGB-Werte
 # https://werner-zenk.de/tools/farbverlauf.php#form
-cols <- c("2seater" = "#00ffff", "compact" = "#00e9ff", "midsize" = "#00d4ff", 
-          "minivan" = "#00beff", "pickup" =  "#00a9ff", "subcompact" = "#0093ff", 
+cols <- c("2seater" = "#00ffff", "compact" = "#00e9ff", "midsize" = "#00d4ff",
+          "minivan" = "#00beff", "pickup" =  "#00a9ff", "subcompact" = "#0093ff",
           "suv" = "#007eff")
 pie + coord_polar(theta = "y", start = 0, direction = 1) +
   scale_colour_manual(values = cols, aesthetics = c("fill"))
@@ -277,8 +280,8 @@ pie + coord_polar(theta = "y", start = 0, direction = 1) +
 
 theme_set(theme_classic())
 gg <- ggplot(mpg, aes(cty))
-gg + geom_density(aes(fill=factor(cyl)), alpha=0.8) + 
-   labs(title="Density plot", 
+gg + geom_density(aes(fill=factor(cyl)), alpha=0.8) +
+   labs(title="Density plot",
        subtitle="Stadtmeilen pro Galon gruppiert nach Zahl der Zylinder",
        caption="Source: mpg",
        x="Stadtmeilen pro Galon",
@@ -299,16 +302,16 @@ gg + geom_density(aes(fill=factor(cyl)), alpha=0.8) +
 # Basic box plot
 
 gg <- ggplot(mpg, aes(class, cty))
-gg + geom_boxplot(varwidth=T, fill="plum") + 
-   labs(title="Box plot", 
+gg + geom_boxplot(varwidth=T, fill="plum") +
+   labs(title="Box plot",
         subtitle="Stadtmeilen pro Galon gruppiert nach Autoklasse",
         caption="Source: mpg",
         x="Autoklasse",
         y="Stadtmeilen pro Galon")
 
 gg <- ggplot(mpg, aes(class, cty))
-gg + geom_boxplot(aes(fill=factor(cyl))) + 
-  labs(title="Box plot", 
+gg + geom_boxplot(aes(fill=factor(cyl))) +
+  labs(title="Box plot",
        subtitle="Stadtmeilen pro Galon gruppiert nach Autoklasse",
        caption="Source: mpg",
        fill = "# Zylinder",
@@ -317,7 +320,6 @@ gg + geom_boxplot(aes(fill=factor(cyl))) +
 
 # ------------------------------------------------------------------------------
 # ------------------------------------------------------------------------------
-# Basic line plot
 "############################################
 #   _     _                    _       _    #
 #  | |   (_)_ __   ___   _ __ | | ___ | |_  #
@@ -326,6 +328,8 @@ gg + geom_boxplot(aes(fill=factor(cyl))) +
 #  |_____|_|_| |_|\___| | .__/|_|\___/ \__| #
 #                       |_|                 #
 ############################################"
+
+# Basic line plot
 
 # Daten erzeugen
 set.seed(123)
@@ -355,9 +359,16 @@ ggplot(df, aes(x = x, y = y)) +
   geom_line( color="#69b3a2", size = 2, alpha = 0.9, linetype = 2) +
   ggtitle("Linienzug")
 
-
-
 # ------------------------------------------------------------------------------
+"######################################################
+#  ____        _     _     _            _       _     #
+# | __ ) _   _| |__ | |__ | | ___ _ __ | | ___ | |_   #
+# |  _ \| | | | '_ \| '_ \| |/ _ \ '_ \| |/ _ \| __|  #
+# | |_) | |_| | |_) | |_) | |  __/ |_) | | (_) | |_   #
+# |____/ \__,_|_.__/|_.__/|_|\___| .__/|_|\___/ \__|  #
+#                                |_|                  #
+######################################################"
+
 # Bubble plot
 
 load(file = "data/gapminder.RData")
@@ -368,7 +379,7 @@ ggplot(data, aes(x=gdpPercap, y=lifeExp, size = pop)) +
   geom_point(alpha=0.7)
 
 
-# Most basic bubble plot
+#
 data %>%
   arrange(desc(pop)) %>%
   mutate(country = factor(country, country)) %>%
@@ -376,7 +387,7 @@ data %>%
   geom_point(alpha=0.5) +
   scale_size(range = c(.1, 24), name="Population (M)")
 
-# Most basic bubble plot
+#
 data %>%
   arrange(desc(pop)) %>%
   mutate(country = factor(country, country)) %>%
@@ -385,15 +396,15 @@ data %>%
   scale_size(range = c(.1, 24), name="Population (M)")
 
 
-# Most basic bubble plot
+#
 data %>%
   arrange(desc(pop)) %>%
   mutate(country = factor(country, country)) %>%
   ggplot(aes(x=gdpPercap, y=lifeExp, size=pop, fill=continent)) +
   geom_point(alpha=0.5, shape=21, color="black") +
   scale_size(range = c(.1, 24), name="Population (M)") +
-  theme(legend.position="bottom") +
+  theme(legend.position="right") +
   ylab("Life Expectancy") +
-  xlab("Gdp per Capita") 
+  xlab("Gdp per Capita")
 
 

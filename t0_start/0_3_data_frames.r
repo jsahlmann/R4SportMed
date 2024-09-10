@@ -2,7 +2,7 @@
 v1 <- c(1, 2, 3, 4)
 v2 <- c("rot", "gelb", "rot", "grün")
 v3 <- c(T, F, F, T)
-df <- data.frame("Id" = v1, "Farbe" = v2, 
+df <- data.frame("Id" = v1, "Farbe" = v2,
                  "Abgeschlossen" = v3)
 df
 
@@ -12,7 +12,7 @@ v0 <- "ABC"
 v1 <- c(1, 2, 3, 4)
 v2 <- c("rot", "gelb", "rot", "grün")
 v3 <- c(T, F, F, T)
-df <- data.frame("Study" = v0, "PatId" = v1, 
+df <- data.frame("Study" = v0, "PatId" = v1,
                  "Farbe" = v2, "Abgeschlossen" = v3)
 df
 
@@ -22,12 +22,12 @@ v0 <- c("ABC", "BCD")
 v1 <- c(1, 2, 3, 4)
 v2 <- c("rot", "gelb", "rot", "grün")
 v3 <- c(T, F, F, T)
-df <- data.frame("Study" = v0, "PatId" = v1, 
+df <- data.frame("Study" = v0, "PatId" = v1,
                  "Farbe" = v2, "Abgeschlossen" = v3)
 df
 
 # Data Frame aus vier Vektoren
-# v0 ist von der Länge kein Vielfaches der anderen Vektoren, 
+# v0 ist von der Länge kein Vielfaches der anderen Vektoren,
 # daher gibt es eine Fehlermeldung beim Zusammenführen.
 v0 <- c("ABC", "BCD", "CDE")
 v1 <- c(1, 2, 3, 4)
@@ -37,15 +37,15 @@ v3 <- c(T, F, F, T)
 #df
 # Die vorigen beiden Zeilen sind nicht ausgeführt worden.
 # Die Fehlermeldung in der nächsten Zelle wurde händisch kopiert.
-# Error in data.frame(Study = v0, PatId = v1, Farbe = v2, Abgeschlossen = v3): 
+# Error in data.frame(Study = v0, PatId = v1, Farbe = v2, Abgeschlossen = v3):
 # Argumente implizieren unterschiedliche Anzahl Zeilen: 3, 4
 # Traceback:
-# 
+#
 # 1. data.frame(Study = v0, PatId = v1, Farbe = v2, Abgeschlossen = v3)
-# 2. stop(gettextf("arguments imply differing number of rows: %s", 
+# 2. stop(gettextf("arguments imply differing number of rows: %s",
 #  .     paste(unique(nrows), collapse = ", ")), domain = NA)
 # Datenzeilen als CSV-String laden
-CSV_text_string = 
+CSV_text_string =
 "STUDYID, USUBJID, AGE, GENDER, RFICDTC
 'XYZ', 'S001', 33, 'M', '2023-01-02'
 'XYZ', 'S002', 43, 'F', '2023-01-03'
@@ -68,20 +68,24 @@ str(d)
 
 as.integer(d)
 
-# Datumsdifferenzen ermitteln, 
+# Datumsdifferenzen ermitteln,
 # das Ergebnis ist ein Objekt Datumsdifferenz.
 d1 <- as.Date('2023-01-02')
 d2 <- as.Date('28-02-2023', format = "%d-%m-%Y")
 dd <- d2 - d1
 dd
 
-# Dieses Objekt wird vor der Weiterverarbeitung 
+# Dieses Objekt wird vor der Weiterverarbeitung
 # in einen Integerwert für Datumsdifferenzen umgewandelt.
 as.integer(dd)
 
 # CSV-Datei einlesen.
-df = read.csv(file = "data/ae.csv", sep = ",", 
+file.edit("data/ae.csv")
+df = read.csv(file = "data/ae.csv", sep = ",",
               header = TRUE, quote = "\"'")
+
+# Struktur der Daten ausgeben
+str(df)
 
 # Einfache Zusammenfassung ausgeben.
 summary(df)
@@ -97,6 +101,10 @@ head(table(df$AEDECOD), 10)
 
 # Zeige die letzten 10 Einträge
 tail(table(df$AEDECOD), 10)
+
+# Eine Spalte mit Character-Datumswerten in Datumswerte umwandeln
+
+df$AESTDTC_date <- as.Date(df$AESTDTC)
 
 # Alternativ Nutzung des Wizards für das Einlesen von CSV-Dateien.
 
