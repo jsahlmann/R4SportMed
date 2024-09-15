@@ -1,6 +1,4 @@
----
-title: "In Bewegung bleiben: Perspektiven in der Sportmedizin"
----
+# In Bewegung bleiben: Perspektiven in der Sportmedizin
 
 ## 4. Nachwuchssymposium des Wissenschaftsrates der DGSP vom 19. bis 21. September 2024 in Freiburg
 
@@ -11,9 +9,10 @@ Weitere Informationen zu diesem Symposium finden Sie unter <https://www.uniklini
 
 Vom Institut für Medizinische Biometrie und Statistik (IMBI) werden im Rahmen dieses Symposiums die folgenden Veranstaltungen angeboten:
 
--  Mittwoch, 18.09.2024 von 15:00 bis 17:00 Uhr: Einführung in das Programm R als Online-Präsentation
--  Samstag, 21.09.2024 von 10:30 bis 11:15 Uhr: Tipps zum Erstellen eines Studienprotokolls anhand des SPIRIT-Statements
--  Samstag, 21.09.2024 von 11:30 bis 12:15 Uhr: Tipps zum Erstellen eines Studienprotokolls anhand des SPIRIT-Statements
+
++ Mittwoch, 18.09.2024 von 15:00 bis 17:00 Uhr: Einführung in das Programm R als Online-Präsentation
++ Samstag, 21.09.2024 von 10:30 bis 11:15 Uhr: Tipps zum Erstellen eines Studienprotokolls anhand des SPIRIT-Statements
++ Samstag, 21.09.2024 von 11:30 bis 12:15 Uhr: Tipps zum Erstellen eines Studienprotokolls anhand des SPIRIT-Statements
 
 
 ### Einführung in R (Online)
@@ -39,23 +38,24 @@ Das Passwort für die Anmeldung zu dieser Einführung wird Ihnen nach der Anmeld
 
 Voraussetzungen für das Nachvollziehen der Beispiele ist ein Laptop oder ein PC mit installierter R-Umgebung bestehend aus
 
-- R in der Version 4.4.0 oder höher (<https://www.r-project.org/>) und
-- RStudio in der Version 2024.04 oder höher (<https://posit.co/download/rstudio-desktop/>)
-- Installierte Packages
-  - broom
-  - car
-  - carData
-  - flextable
-  - foreign
-  - ggplot2
-  - officer
-  - readr
-  - rmarkdown
-  - safetyData
-  - survival
-  - survminer
-  - tidyverse
-- Kursunterlagen
+
+* R in der Version 4.4.0 oder höher (<https://www.r-project.org/>) und
+* RStudio in der Version 2024.04 oder höher (<https://posit.co/download/rstudio-desktop/>)
+* Installierte Packages
+    * broom
+    * car
+    * carData
+    * flextable
+    * foreign
+    * ggplot2
+    * officer
+    * readr
+    * rmarkdown
+    * safetyData
+    * survival
+    * survminer
+    * tidyverse
+* Kursunterlagen
 
 Der Kurs wird in einer Windows-Umgebung durchgeführt.
 
