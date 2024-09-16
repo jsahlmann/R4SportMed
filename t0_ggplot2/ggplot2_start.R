@@ -32,6 +32,10 @@ library(ggplot2)
 # Basic scatterplot
 head(iris)
 
+# Wo holt man sich Hilfe?
+help("iris")
+# Beispiele in der Hilfe ausführen.
+
 ggplot(iris, aes(x = Sepal.Length, y = Sepal.Width)) +
   geom_point()
 

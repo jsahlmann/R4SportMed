@@ -17,13 +17,17 @@ df <- adam_adtte
 #df <- read.xport("../data/adtte.xpt")
 head(df)
 
-df %>% select(STUDYID, USUBJID, TRTP, AVAL, CNSR) %>% head()
+df %>%
+  select(STUDYID, USUBJID, TRTP, AVAL, CNSR) %>%
+  head()
 
 
 
 ## -------------------------------------------------------------------------------------------------------------------
 
-table(df$PARAMCD, df$CNSR) %>% as.data.frame() %>% rename("Event" = Var1, "Censoring" = Var2, "Count" = Freq) %>% flextable()
+table(df$PARAMCD, df$CNSR) %>%
+  as.data.frame() %>% rename("Event" = Var1, "Censoring" = Var2, "Count" = Freq) %>%
+  flextable()
 
 
 
@@ -41,7 +45,7 @@ head(sf)
 
 ## -------------------------------------------------------------------------------------------------------------------
 
-plt <- ggsurvplot(sf, data = df,  
+plt <- ggsurvplot(sf, data = df,
                   palette =
     c("green", "#E7B800", "#2E9FDF")
 )
@@ -90,8 +94,8 @@ ggsurvplot(
 
 
 ## ---- eval = FALSE--------------------------------------------------------------------------------------------------
-## 
+##
 ## my_doc <- read_docx() %>% body_add_img(src = "t5_km.png", height = 4, width = 4)
 ## print(my_doc, target = "t5_km.docx")
-## 
+##
 
