@@ -10,7 +10,7 @@ Weitere Informationen zu diesem Symposium finden Sie unter <https://www.uniklini
 Vom Institut für Medizinische Biometrie und Statistik (IMBI) werden im Rahmen dieses Symposiums die folgenden Veranstaltungen angeboten:
 
 
-+ Mittwoch, 18.09.2024 von 15:00 bis 17:00 Uhr: Einführung in das Programm R als Online-Präsentation
++ Mittwoch, 18.09.2024 von 15:00 bis 17:00 Uhr: Einführung in das Programm R als Online-Präsentation (hat stattgefunden)
 + Samstag, 21.09.2024 von 10:30 bis 11:15 Uhr: Tipps zum Erstellen eines Studienprotokolls anhand des SPIRIT-Statements
 + Samstag, 21.09.2024 von 11:30 bis 12:15 Uhr: Tipps zum Erstellen eines Studienprotokolls anhand des SPIRIT-Statements
 
@@ -19,20 +19,11 @@ Vom Institut für Medizinische Biometrie und Statistik (IMBI) werden im Rahmen d
 
 #### Repo
 
-Dieses Repo wird zu dem Datum alle relevanten Dateien enthalten, die für das Nachvollziehen der Beispiele gebraucht werden.
-
-Bitte laden Sie sich am Abend des 17.09.2024 das aktuelle Repo als ZIP-Datei herunter und entpacken Sie es auf Ihrem Laptop oder PC.
+Dieses Repo enthält alle relevanten Dateien, die für das Nachvollziehen der Beispiele gebraucht werden.
 
 #### Anmeldung
 
-Sie können sich unter dem folgenden Link ...
-
-[Link zur Anmeldung](https://terminplaner6.dfn.de/b/f5fb5335832c06e692d87ade0bb80322-847426)
-
-... anmelden.
-
-Das Passwort für die Anmeldung zu dieser Einführung wird Ihnen nach der Anmeldung zu dem Symposium zugeschickt.
-
+Die Veranstaltung hat inzwischen stattgefunden. Eine Anmeldung ist nicht mehr möglich.
 
 #### Voraussetzungen
 
@@ -57,7 +48,7 @@ Voraussetzungen für das Nachvollziehen der Beispiele ist ein Laptop oder ein PC
     * tidyverse
 * Kursunterlagen
 
-Der Kurs wird in einer Windows-Umgebung durchgeführt.
+Der Kurs wurde in einer Windows-Umgebung durchgeführt.
 
 Auf etwaige Besonderheiten einer Linux- oder einer MacOS-Umgebung kann im Rahmen dieser Einführung nicht eingegangen werden.
 
